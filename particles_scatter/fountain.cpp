@@ -1,4 +1,4 @@
-// hello_world.cpp 해야할일 클래스짜기
+
 #include <GL/glew.h>
 #include <GL/freeglut.h>
 #include <iostream>
@@ -34,8 +34,8 @@ mat4x4f P, V;
 float angle_cube = 0.0f;
 
 
-float eyex = 0.0f, eyey = 2.0f, eyez = 25.0f; //카메라의 위치. 카메라는 -z방향으로 보고있다
-float centerx = 0.0f, centery = 2.0f, centerz = 0.0f; //카메라가 보는 방향
+float eyex = 0.0f, eyey = 2.0f, eyez = 25.0f;
+float centerx = 0.0f, centery = 2.0f, centerz = 0.0f; 
 float upx = 0.0f, upy = 1.0f, upz = 0.0f;
 class line {
   float position[176];
