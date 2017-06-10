@@ -10,20 +10,10 @@
 
 #define MAX_P 1000
 using namespace kmuvcl::math;
-/*class camera{
 
-private:
-  kmuvcl::vec3f x_axis;  //축은 translate과 무관하다
-  kmuvcl::vec3f y_axis;
-  kmuvcl::vec3f z_axis;
-  kmuvcl::vec3f origin;//중심의 위치  eye로 대응
-  // center는 오리진 더하기 z의 음수에 x배하면 된다.
-  lookAt (origin.x, origin.y, origin.z,
-          origin.x+z_axis, origin.y+z)
-*/
 GLuint create_shader_from_file(const std::string& filename, GLuint shader_type);
 
-GLuint program; // 쉐이더 프로그램 객체의 레퍼런스 값
+GLuint program; 
 GLint  loc_a_position;
 GLint  loc_a_color;
 GLint  loc_u_M;
@@ -89,10 +79,7 @@ public:
     glEnableVertexAttribArray(loc_a_color);
     glEnableVertexAttribArray(loc_a_position);
 
-    //glDrawArrays(GL_TRIANGLES, 0, 3 /* 정점개수 */);
     glDrawElements(GL_LINES, 44, GL_UNSIGNED_BYTE, indices);
-
-    //glDrawElements(GL_POINTS, 1, GL_UNSIGNED_BYTE, indices[1]);
 
 
     glDisableVertexAttribArray(loc_a_color);
@@ -168,21 +155,14 @@ public:
       y = 0;
       z = 0;
       start = t;
-      //v_x = 2*((float)(rand()%400+1)-200)/100000; //-0.002~0.002
       v_x = 0.004*(float)(rand()%4-1.5);
-      //v_y = 0.01 + ((float)(rand()%20+1))/1000;
       v_y = 0.01 + ((float)(rand()%4+1))/200;
-      //v_z = 2*((float)(rand()%400+1)-200)/100000;
       v_z = 0.004*(float)(rand()%4-1.5);
     };
 
     T = translate(x, y, z);
     R = rotate(angle_cube,0.0f,1.0f,1.0f);
     M = T*R;
-    //V = lookAt(eyex, eyey, eyez,
-    //            centerx, centery, centerz,
-    //            upx, upy, upz)*rotate(degree_x, 0.0f, 1.0f, 0.0f)*rotate(degree_y, 1.0f, 0.0f, 0.0f);
-    //P = perspective(ang, 1.0f, 0.001f, 10000.0f);
 
     glUniformMatrix4fv(loc_u_M, 1, false, M);
     glUniformMatrix4fv(loc_u_V, 1, false, V);
@@ -195,10 +175,8 @@ public:
     glEnableVertexAttribArray(loc_a_color);
     glEnableVertexAttribArray(loc_a_position);
 
-    //glDrawArrays(GL_TRIANGLES, 0, 3 /* 정점개수 */);
     glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_BYTE, indices);
 
-    //glDrawElements(GL_POINTS, 1, GL_UNSIGNED_BYTE, indices[1]);
     glPointSize(4.0f);
 
 
@@ -222,16 +200,9 @@ public:
 {
 
 
-    //std::cout<<"cube bounce"<<std::endl;
     this->y -=3*v_y - 0.0009 * (t-start);
-    //std::cout<<y<<std::endl;
 
 }
-  //void cube_rotate()
-// {
-  // this->R=rotate(angle_cube,0.0f,1.0f,1.0f);
-//  // std::cout<<"cube rotate= "<<this->R<<std::endl;
- //}
 
 
   void init(){
@@ -330,15 +301,13 @@ void mykeyboard(unsigned char key, int x, int y){
   if (key == 'd' || key == 'D'){
     eyex += 0.1f;
     centerx +=0.1f;
-    glutPostRedisplay(); //이벤트를 포스팅한다. 새로그려야겠다는 메스트를 보내는 것이다. OS한테
-    //mydisplay(); 이러면 안됨. OS한테 이벤트를 줘야됨.
+    glutPostRedisplay(); 
   }
 
   if (key == 'z' || key == 'Z'){
     eyez += 1.0f;
     centerz +=1.0f;
-    glutPostRedisplay(); //이벤트를 포스팅한다. 새로그려야겠다는 메스트를 보내는 것이다. OS한테
-    //mydisplay(); 이러면 안됨. OS한테 이벤트를 줘야됨.
+    glutPostRedisplay(); 
   }
 
   if(eyez>10)
@@ -346,8 +315,7 @@ void mykeyboard(unsigned char key, int x, int y){
     if (key == 'x' || key == 'X'){
       eyez -= 1.0f;
       centerz -=1.0f;
-      glutPostRedisplay(); //이벤트를 포스팅한다. 새로그려야겠다는 메스트를 보내는 것이다. OS한테
-      //mydisplay(); 이러면 안됨. OS한테 이벤트를 줘야됨.
+      glutPostRedisplay();
     }
     std::cout<<eyez<<std::endl;
   }
@@ -360,34 +328,29 @@ void mykeyboard(unsigned char key, int x, int y){
   if (key == 'a' || key == 'A'){
     eyex -= 1.0f;
     centerx -=1.0f;
-    glutPostRedisplay(); //이벤트를 포스팅한다. 새로그려야겠다는 메스트를 보내는 것이다. OS한테
-    //mydisplay(); 이러면 안됨. OS한테 이벤트를 줘야됨.
+    glutPostRedisplay();
   }
   if (key == 'w' || key == 'W'){
     eyey += 0.1f;
     centery +=0.1f;
-    glutPostRedisplay(); //이벤트를 포스팅한다. 새로그려야겠다는 메스트를 보내는 것이다. OS한테
-    //mydisplay(); 이러면 안됨. OS한테 이벤트를 줘야됨.
+    glutPostRedisplay();
   }
   if (key == 's' || key == 'S'){
     eyey -= 0.1f;
     centery -=0.1f;
-    glutPostRedisplay(); //이벤트를 포스팅한다. 새로그려야겠다는 메스트를 보내는 것이다. OS한테
-    //mydisplay(); 이러면 안됨. OS한테 이벤트를 줘야됨.
+    glutPostRedisplay();
   }
   if (key == '-' || key == '_'){
     if ( ang < 80){
       ang += 1;
     }
-    glutPostRedisplay(); //이벤트를 포스팅한다. 새로그려야겠다는 메스트를 보내는 것이다. OS한테
-    //mydisplay(); 이러면 안됨. OS한테 이벤트를 줘야됨.
+    glutPostRedisplay();
   }
   if (key == 0x2B || key == '='){
     if (ang >1){
       ang += -1;
     }
-    glutPostRedisplay(); //이벤트를 포스팅한다. 새로그려야겠다는 메스트를 보내는 것이다. OS한테
-    //mydisplay(); 이러면 안됨. OS한테 이벤트를 줘야됨.
+    glutPostRedisplay(); 
   }
 }
 GLuint create_shader_from_file(const std::string& filename, GLuint shader_type){
@@ -409,15 +372,12 @@ GLuint create_shader_from_file(const std::string& filename, GLuint shader_type){
 void init(){
   glewInit();
 
-  // 정점 쉐이더 객체를 파일로부터 생성
   GLuint vertex_shader
     = create_shader_from_file("./shader/vertex.glsl", GL_VERTEX_SHADER);
 
-  // 프래그먼트 쉐이더 객체를 파일로부터 생성
   GLuint fragment_shader
     = create_shader_from_file("./shader/fragment.glsl", GL_FRAGMENT_SHADER);
 
-  // 쉐이더 프로그램 생성 및 컴파일
   program = glCreateProgram();
   glAttachShader(program, vertex_shader);
   glAttachShader(program, fragment_shader);
@@ -452,9 +412,7 @@ void mydisplay(){
   for(int i = 0 ; i <P_Num; i++){
   points[i].update();
   points[i].color_change((float)((rand()%10)+1)/10,(float)((rand()%10)+1)/10,(float)((rand()%10)+1)/10);
-  //points[i].color_change(R,G,B);
-  //points[i].cube_rotate();
-}
+  }
 
   glUseProgram(0);
 
